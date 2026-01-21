@@ -11,7 +11,7 @@ build:
 	./build.sh
 
 render-start:
-	gunicorn task_manager.wsgi
+	gunicorn task_manager.wsgi:application
 
 lint:
 	ruff check task_manager task_manager_app
