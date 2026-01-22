@@ -3,7 +3,9 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .views import (
     UserListView, UserCreateView, UserUpdateView, UserDeleteView,
     StatusListView, StatusCreateView, StatusUpdateView, StatusDeleteView,
-    TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView
+    TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView,
+    LabelListView, LabelCreateView, LabelUpdateView, LabelDeleteView,
+    rollbar_test
 )
 
 urlpatterns = [
@@ -35,4 +37,7 @@ urlpatterns = [
     path('labels/create/', LabelCreateView.as_view(), name='label-create'),
     path('labels/<int:pk>/update/', LabelUpdateView.as_view(), name='label-update'),
     path('labels/<int:pk>/delete/', LabelDeleteView.as_view(), name='label-delete'),
+
+    # тестовый маршрут для Rollbar
+    path('rollbar-test/', rollbar_test, name='rollbar-test'),
 ]

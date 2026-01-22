@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import dj_database_url
+import rollbar
 
 load_dotenv()
 
@@ -127,3 +128,21 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'  # или куда перенаправлять после входа
 LOGOUT_REDIRECT_URL = '/login/'
 
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),  # токен из Rollbar
+    'environment': 'development',  # можно 'production' после деплоя
+    'root': os.path.dirname(os.path.abspath(__file__)),
+}
+
+# Подключаем Rollbar к Django как middleware
+MIDDLEWARE = [
+    # ... твои текущие middleware ...
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+]
+
+# Инициализация Rollbar
+rollbar.init(
+    ROLLBAR['access_token'],
+    ROLLBAR['environment'],
+    root=ROLLBAR['root'],
+)

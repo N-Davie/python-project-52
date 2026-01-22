@@ -11,7 +11,9 @@ from .models import Task
 from .models import Label
 from .forms import LabelForm
 from .filters import TaskFilter
-
+from django.http import HttpResponse
+import rollbar
+from django_filters.views import FilterView
 
 # ========================
 # Status Views
@@ -141,7 +143,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         messages.success(self.request, 'Задача успешно создана.')
         return super().form_valid(form)
     
-    # ========================
+# ========================
 # Task Views
 # ========================
 
@@ -222,3 +224,10 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
             return redirect('label-list')
         messages.success(request, 'Метка успешно удалена.')
         return super().delete(request, *args, **kwargs)
+
+def rollbar_test(request):
+    try:
+        1 / 0  # намеренно делаем ошибку
+    except ZeroDivisionError:
+        rollbar.report_exc_info()  # отправляем ошибку в Rollbar
+    return HttpResponse("Тестовое событие отправлено в Rollbar")
