@@ -1,0 +1,24 @@
+{% extends "task_manager_app/base.html" %}
+
+{% block title %}Задача: {{ task.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ task.name }}</h1>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<p><strong>Описание:</strong> {{ task.description }}</p>
+<p><strong>Статус:</strong> {{ task.status.name }}</p>
+<p><strong>Автор:</strong> {{ task.author.username }}</p>
+<p><strong>Исполнитель:</strong> {{ task.executor.username if task.executor else "—" }}</p>
+
+<a href="{% url 'task-update' task.id %}">Редактировать</a> |
+<a href="{% url 'task-delete' task.id %}">Удалить</a> |
+<a href="{% url 'task-list' %}">Вернуться к списку задач</a>
+{% endblock %}

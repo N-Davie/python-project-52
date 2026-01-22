@@ -2,10 +2,9 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from .views import (
     UserListView, UserCreateView, UserUpdateView, UserDeleteView,
-    StatusListView, StatusCreateView, StatusUpdateView, StatusDeleteView
+    StatusListView, StatusCreateView, StatusUpdateView, StatusDeleteView,
+    TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView
 )
-from .views import TaskCreateView, TaskListView, TaskUpdateView, TaskDeleteView, TaskDetailView
-
 
 urlpatterns = [
     # маршруты для пользователей

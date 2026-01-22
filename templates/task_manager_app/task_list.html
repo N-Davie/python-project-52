@@ -1,0 +1,41 @@
+{% extends "task_manager_app/base.html" %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+<h1>Задачи</h1>
+
+<a href="{% url 'task-create' %}">Создать задачу</a>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>Название</th>
+    <th>Статус</th>
+    <th>Автор</th>
+    <th>Исполнитель</th>
+    <th>Действия</th>
+  </tr>
+  {% for task in tasks %}
+    <tr>
+      <td><a href="{% url 'task-detail' task.id %}">{{ task.name }}</a></td>
+      <td>{{ task.status.name }}</td>
+      <td>{{ task.author.username }}</td>
+      <td>{{ task.executor.username if task.executor else "" }}</td>
+      <td>
+        <a href="{% url 'task-update' task.id %}">Редактировать</a> |
+        <a href="{% url 'task-delete' task.id %}">Удалить</a>
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5">Нет задач</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
