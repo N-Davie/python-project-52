@@ -4,6 +4,8 @@ from .views import (
     UserListView, UserCreateView, UserUpdateView, UserDeleteView,
     StatusListView, StatusCreateView, StatusUpdateView, StatusDeleteView
 )
+from .views import TaskCreateView, TaskListView, TaskUpdateView, TaskDeleteView, TaskDetailView
+
 
 urlpatterns = [
     # маршруты для пользователей
@@ -21,4 +23,11 @@ urlpatterns = [
     # логин и логаут
     path('login/', LoginView.as_view(template_name='task_manager_app/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+
+    # маршруты для задач
+    path('tasks/', TaskListView.as_view(), name='task-list'),
+    path('tasks/create/', TaskCreateView.as_view(), name='task-create'),
+    path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
+    path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='task-update'),
+    path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
 ]
