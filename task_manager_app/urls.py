@@ -29,4 +29,10 @@ urlpatterns = [
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='task-update'),
     path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
+
+    # маршруты для меток
+    path('labels/', LabelListView.as_view(), name='label-list'),
+    path('labels/create/', LabelCreateView.as_view(), name='label-create'),
+    path('labels/<int:pk>/update/', LabelUpdateView.as_view(), name='label-update'),
+    path('labels/<int:pk>/delete/', LabelDeleteView.as_view(), name='label-delete'),
 ]

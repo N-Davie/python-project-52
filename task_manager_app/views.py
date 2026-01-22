@@ -8,6 +8,8 @@ from .models import Status
 from .forms import StatusForm
 from .forms import TaskForm
 from .models import Task
+from .models import Label
+from .forms import LabelForm
 
 
 # ========================
@@ -176,4 +178,46 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
             messages.error(request, 'Удалять задачу может только её автор.')
             return redirect('task-list')
         messages.success(request, 'Задача успешно удалена.')
+        return super().delete(request, *args, **kwargs)
+    
+# ========================
+# Label Views
+# ========================
+
+class LabelListView(LoginRequiredMixin, ListView):
+    model = Label
+    template_name = 'task_manager_app/label_list.html'
+    context_object_name = 'labels'
+
+class LabelCreateView(LoginRequiredMixin, CreateView):
+    model = Label
+    form_class = LabelForm
+    template_name = 'task_manager_app/label_form.html'
+    success_url = reverse_lazy('label-list')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Метка успешно создана.')
+        return super().form_valid(form)
+
+class LabelUpdateView(LoginRequiredMixin, UpdateView):
+    model = Label
+    form_class = LabelForm
+    template_name = 'task_manager_app/label_form.html'
+    success_url = reverse_lazy('label-list')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Метка успешно обновлена.')
+        return super().form_valid(form)
+
+class LabelDeleteView(LoginRequiredMixin, DeleteView):
+    model = Label
+    template_name = 'task_manager_app/label_confirm_delete.html'
+    success_url = reverse_lazy('label-list')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.tasks.exists():
+            messages.error(request, 'Невозможно удалить метку, связанную с задачами.')
+            return redirect('label-list')
+        messages.success(request, 'Метка успешно удалена.')
         return super().delete(request, *args, **kwargs)

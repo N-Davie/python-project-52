@@ -1,15 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# твоя модель Status
+# Модель Status
 class Status(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
+# Модель Label
+class Label(models.Model):
+    name = models.CharField(max_length=50)
 
-# модель Task
+    def __str__(self):
+        return self.name
+
+# Модель Task
 class Task(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -33,6 +39,8 @@ class Task(models.Model):
         blank=True,
         related_name='assigned_tasks'
     )
+
+    labels = models.ManyToManyField(Label, blank=True, related_name='tasks')
 
     created_at = models.DateTimeField(auto_now_add=True)
 
