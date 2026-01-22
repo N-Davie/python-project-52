@@ -15,12 +15,20 @@
   {% endfor %}
 {% endif %}
 
+<!-- Форма фильтрации -->
+<form method="get" style="margin-top: 20px; margin-bottom: 20px;">
+  {{ filter.form.as_p }}
+  <button type="submit">Применить фильтр</button>
+  <a href="{% url 'task-list' %}" class="btn btn-secondary">Сбросить фильтр</a>
+</form>
+
 <table border="1" cellpadding="5" cellspacing="0">
   <tr>
     <th>Название</th>
     <th>Статус</th>
     <th>Автор</th>
     <th>Исполнитель</th>
+    <th>Метки</th>
     <th>Действия</th>
   </tr>
   {% for task in tasks %}
@@ -30,12 +38,19 @@
       <td>{{ task.author.username }}</td>
       <td>{{ task.executor.username if task.executor else "" }}</td>
       <td>
+        {% for label in task.labels.all %}
+          {{ label.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+          -
+        {% endfor %}
+      </td>
+      <td>
         <a href="{% url 'task-update' task.id %}">Редактировать</a> |
         <a href="{% url 'task-delete' task.id %}">Удалить</a>
       </td>
     </tr>
   {% empty %}
-    <tr><td colspan="5">Нет задач</td></tr>
+    <tr><td colspan="6">Нет задач</td></tr>
   {% endfor %}
 </table>
 {% endblock %}

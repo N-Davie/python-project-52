@@ -159,3 +159,69 @@ def test_delete_label_with_task(client):
     response = client.post(url)
     # метка не удалена, так как связана с задачей
     assert Label.objects.filter(id=label.id).exists()
+
+# ========================
+# Task Filter Tests
+# ========================
+
+def test_task_filter_by_status(client):
+    user = login(client)
+    status1 = Status.objects.create(name='Статус1')
+    status2 = Status.objects.create(name='Статус2')
+
+    Task.objects.create(name='Task1', status=status1, author=user)
+    Task.objects.create(name='Task2', status=status2, author=user)
+
+    url = reverse('task-list') + f'?status={status1.id}'
+    response = client.get(url)
+    assert response.status_code == 200
+    assert 'Task1' in response.content.decode()
+    assert 'Task2' not in response.content.decode()
+
+
+def test_task_filter_by_executor(client):
+    user = login(client)
+    executor = create_user(username='executor')
+    status = Status.objects.create(name='Статус')
+
+    Task.objects.create(name='Task1', status=status, author=user, executor=executor)
+    Task.objects.create(name='Task2', status=status, author=user)
+
+    url = reverse('task-list') + f'?executor={executor.id}'
+    response = client.get(url)
+    assert response.status_code == 200
+    assert 'Task1' in response.content.decode()
+    assert 'Task2' not in response.content.decode()
+
+
+def test_task_filter_by_label(client):
+    user = login(client)
+    status = Status.objects.create(name='Статус')
+    label1 = Label.objects.create(name='Баг')
+    label2 = Label.objects.create(name='Фича')
+
+    task1 = Task.objects.create(name='Task1', status=status, author=user)
+    task1.labels.add(label1)
+    task2 = Task.objects.create(name='Task2', status=status, author=user)
+    task2.labels.add(label2)
+
+    url = reverse('task-list') + f'?labels={label1.id}'
+    response = client.get(url)
+    content = response.content.decode()
+    assert 'Task1' in content
+    assert 'Task2' not in content
+
+
+def test_task_filter_only_mine(client):
+    user1 = login(client)
+    user2 = create_user(username='other')
+    status = Status.objects.create(name='Статус')
+
+    Task.objects.create(name='MyTask', status=status, author=user1)
+    Task.objects.create(name='OtherTask', status=status, author=user2)
+
+    url = reverse('task-list') + '?only_mine=on'
+    response = client.get(url)
+    content = response.content.decode()
+    assert 'MyTask' in content
+    assert 'OtherTask' not in content

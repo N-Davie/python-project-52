@@ -10,6 +10,7 @@ from .forms import TaskForm
 from .models import Task
 from .models import Label
 from .forms import LabelForm
+from .filters import TaskFilter
 
 
 # ========================
@@ -144,11 +145,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 # Task Views
 # ========================
 
-class TaskListView(LoginRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
     template_name = 'task_manager_app/task_list.html'
     context_object_name = 'tasks'
-
+    filterset_class = TaskFilter
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
