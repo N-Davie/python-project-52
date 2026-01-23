@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -129,16 +130,11 @@ LOGIN_REDIRECT_URL = '/'  # или куда перенаправлять пос�
 LOGOUT_REDIRECT_URL = '/login/'
 
 ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),  # токен из Rollbar
-    'environment': 'development',  # можно 'production' после деплоя
-    'root': os.path.dirname(os.path.abspath(__file__)),
+    'access_token': '51aca8257600409d898576e31ec6ff1a',
+    'environment': 'development' if DEBUG else 'production',
+    'code_version': '1.0',
+    'root': BASE_DIR,
 }
-
-# Подключаем Rollbar к Django как middleware
-MIDDLEWARE = [
-    # ... твои текущие middleware ...
-    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
-]
 
 # Инициализация Rollbar
 rollbar.init(
