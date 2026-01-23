@@ -7,7 +7,7 @@ class TaskFilter(django_filters.FilterSet):
     executor = django_filters.ModelChoiceFilter(queryset=User.objects.all())
     labels = django_filters.ModelMultipleChoiceFilter(
         queryset=Label.objects.all(),
-        conjoined=False,  # задачи, содержащие любую из выбранных меток
+        conjoined=False,
     )
     my_tasks = django_filters.BooleanFilter(
         method='filter_my_tasks',
