@@ -36,13 +36,21 @@
       <td><a href="{% url 'task-detail' task.id %}">{{ task.name }}</a></td>
       <td>{{ task.status.name }}</td>
       <td>{{ task.author.username }}</td>
-      <td>{{ task.executor.username if task.executor else "" }}</td>
       <td>
-        {% for label in task.labels.all %}
-          {{ label.name }}{% if not forloop.last %}, {% endif %}
-        {% empty %}
+        {% if task.executor %}
+          {{ task.executor.username }}
+        {% else %}
           -
-        {% endfor %}
+        {% endif %}
+      </td>
+      <td>
+        {% if task.labels.exists %}
+          {% for label in task.labels.all %}
+            {{ label.name }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        {% else %}
+          -
+        {% endif %}
       </td>
       <td>
         <a href="{% url 'task-update' task.id %}">Редактировать</a> |
