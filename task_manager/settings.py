@@ -83,10 +83,11 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-         default='sqlite:///db.sqlite3'
+        default=os.environ.get('DATABASE_URL')
     )
 }
 
+postgresql://task_manager_yooq_user:LVNqcQs5nTxoy8uol5qpipgVdBOGeg1e@dpg-d5qa8d63jp1c739clp90-a/task_manager_yooq
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
