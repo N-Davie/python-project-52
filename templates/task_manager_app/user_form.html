@@ -36,4 +36,44 @@
 
   <!-- Имя пользователя -->
   <p>
-    <label style="font-weight: bold;">Имя пользователя</label><br
+    <label style="font-weight: bold;">Имя пользователя</label><br>
+    {{ form.username|attr:"placeholder:Имя пользователя" }}
+    <small style="color: gray;">Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.</small>
+    {{ form.username.errors }}
+  </p>
+
+  <!-- Пароль -->
+  <p>
+    <label style="font-weight: bold;">Пароль</label><br>
+    {{ form.password1|attr:"placeholder:Пароль" }}
+    <small style="color: gray;">Ваш пароль должен содержать как минимум 3 символа.</small>
+    {{ form.password1.errors }}
+  </p>
+
+  <!-- Подтверждение пароля -->
+  <p>
+    <label style="font-weight: bold;">Подтверждение пароля</label><br>
+    {{ form.password2|attr:"placeholder:Подтверждение пароля" }}
+    <small style="color: gray;">Для подтверждения введите, пожалуйста, пароль ещё раз.</small>
+    {{ form.password2.errors }}
+  </p>
+
+  <!-- Кнопка -->
+  <p>
+    <button type="submit" style="
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    ">Зарегистрироваться</button>
+  </p>
+</form>
+
+<!-- Ссылка на вход -->
+<p>
+  Уже есть аккаунт? <a href="{% url 'login' %}" style="color: #007bff; text-decoration: underline;">Войти</a>
+</p>
+{% endblock %}
