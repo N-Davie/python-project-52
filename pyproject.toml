@@ -14,6 +14,7 @@ dependencies = [
     "validators",
     "requests>=2.31",
     "beautifulsoup4",
+     "rollbar",
 ]
 
 [build-system]
