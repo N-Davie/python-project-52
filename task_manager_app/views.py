@@ -73,7 +73,7 @@ def home(request):
 # User Views
 # ========================
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'task_manager_app/user_list.html'
     context_object_name = 'users'
@@ -95,7 +95,7 @@ class UserCreateView(CreateView):
 
 class UserUpdateView(UpdateView):
     model = User
-    fields = ['username', 'password']
+    fields = ['username', 'first_name', 'last_name']
     template_name = 'task_manager_app/user_form.html'
     success_url = reverse_lazy('user-list')
 
@@ -106,10 +106,6 @@ class UserUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save(commit=False)
-        if form.cleaned_data['password']:
-            user.set_password(form.cleaned_data['password'])
-        user.save()
         messages.success(self.request, 'Пользователь успешно обновлен.')
         return super().form_valid(form)
 
@@ -153,6 +149,13 @@ class TaskListView(LoginRequiredMixin, FilterView):
     context_object_name = 'tasks'
     filterset_class = TaskFilter
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.GET.get('only_mine'):
+            queryset = queryset.filter(author=self.request.user)
+        return queryset
+
+
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task_manager_app/task_detail.html'
@@ -175,9 +178,9 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('task-list')
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        # Проверка: удалять может только автор
-        if self.object.author != request.user:
+        task = self.get_object()  # читаем объект
+        # Проверка: только автор может удалить
+        if task.author != request.user:
             messages.error(request, 'Удалять задачу может только её автор.')
             return redirect('task-list')
         messages.success(request, 'Задача успешно удалена.')
@@ -218,12 +221,16 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('label-list')
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object.tasks.exists():
+        label = self.get_object()
+
+        # Проверяем связанные задачи
+        if label.task_set.exists():  # task_set — это default related_name
             messages.error(request, 'Невозможно удалить метку, связанную с задачами.')
             return redirect('label-list')
+
         messages.success(request, 'Метка успешно удалена.')
         return super().delete(request, *args, **kwargs)
+
 
 def rollbar_test(request):
     try:

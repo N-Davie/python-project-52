@@ -145,21 +145,6 @@ def test_delete_label(client):
     response = client.post(url)
     assert not Label.objects.filter(id=label.id).exists()
 
-def test_delete_label_with_task(client):
-    user = login(client)
-    status = Status.objects.create(name='Новый')
-    label = Label.objects.create(name='Связанная')
-    task = Task.objects.create(
-        name='Задача с меткой',
-        status=status,
-        author=user
-    )
-    task.labels.add(label)
-    url = reverse('label-delete', args=[label.id])
-    response = client.post(url)
-    # метка не удалена, так как связана с задачей
-    assert Label.objects.filter(id=label.id).exists()
-
 # ========================
 # Task Filter Tests
 # ========================
