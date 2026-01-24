@@ -1,11 +1,37 @@
 {% extends "task_manager_app/base.html" %}
 
+{% load widget_tweaks %}
+
+{% block title %}Вход{% endblock %}
+
 {% block content %}
-<h2>Вход</h2>
-<form method="post">
+<h2 style="margin-bottom: 20px;">Вход</h2>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<form method="post" style="max-width: 400px;">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Войти</button>
+
+  <!-- Имя пользователя -->
+  <div class="mb-3">
+    <label for="id_username" class="form-label">Имя пользователя</label>
+    {{ form.username|attr:"placeholder:Введите имя пользователя,class:form-control,id:id_username" }}
+    <!-- Ошибки выводить не нужно, так как они встроены в поле, если есть -->
+  </div>
+
+  <!-- Пароль -->
+  <div class="mb-3">
+    <label for="id_password" class="form-label">Пароль</label>
+    {{ form.password|attr:"placeholder:Введите пароль,class:form-control,id:id_password" }}
+  </div>
+
+  <!-- Кнопка -->
+  <button type="submit" class="btn btn-primary w-100">Войти</button>
 </form>
 {% endblock %}
-

@@ -5,11 +5,14 @@ from task_manager_app.views import (
     status_views,
     task_views,
     label_views,
-    misc_views
+    misc_views,
+    home,  # импортируем функцию home
 )
-from task_manager_app.views import home
 
 urlpatterns = [
+    # Главная страница
+    path('', home, name='home'),
+
     # маршруты для пользователей
     path('users/', user_views.UserListView.as_view(), name='user-list'),
     path('users/create/', user_views.UserCreateView.as_view(), name='user-create'),
