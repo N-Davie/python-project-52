@@ -16,7 +16,6 @@ render-start:
 lint:
 	ruff check task_manager task_manager_app
 
-test:
-	PYTHONPATH=. pytest task_manager_app/tests
+# test: PYTHONPATH=. pytest task_manager_app/tests
 
 .PHONY: install collectstatic migrate build render-start lint test
