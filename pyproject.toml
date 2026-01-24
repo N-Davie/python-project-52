@@ -22,7 +22,8 @@ dependencies = [
     "django-bootstrap5",
     "rollbar",
     "django-filter",
-    "pytest-django"
+    "pytest-django",
+    "django-widget-tweaks",
 ]
 
 [build-system]
