@@ -1,5 +1,5 @@
 install:
-	uv pip install -r requirements.txt
+	uv pip install .
 
 collectstatic:
 	python manage.py collectstatic --noinput
@@ -14,9 +14,9 @@ render-start:
 	gunicorn task_manager.wsgi:application
 
 lint:
-	ruff check task_manager task_manager_app
+	ruff check task_manager users tasks statuses labels
 
 test:
-	PYTHONPATH=/project pytest task_manager_app/tests
+	pytest
 
 .PHONY: install collectstatic migrate build render-start lint test
