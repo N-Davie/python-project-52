@@ -4,13 +4,13 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
 from django_filters.views import FilterView
-from task_manager_app.models import Task, Status, Label
-from task_manager_app.forms import TaskForm
-from task_manager_app.filters import TaskFilter
+from task_manager.tasks.models import Task, Status, Label
+from task_manager.tasks.forms import TaskForm
+from task_manager.filters import TaskFilter
 
 class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
-    template_name = 'task_manager_app/task_list.html'
+    template_name = 'task_manager/tasks/task_list.html'
     context_object_name = 'tasks'
     filterset_class = TaskFilter
 
@@ -22,13 +22,13 @@ class TaskListView(LoginRequiredMixin, FilterView):
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
-    template_name = 'task_manager_app/task_detail.html'
+    template_name = 'task_manager/tasks/task_detail.html'
     context_object_name = 'task'
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task_manager_app/task_form.html'
+    template_name = 'task_manager/tasks/task_form.html'
     success_url = reverse_lazy('task-list')
 
     def form_valid(self, form):
@@ -39,7 +39,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task_manager_app/task_form.html'
+    template_name = 'task_manager/tasks/task_form.html'
     success_url = reverse_lazy('task-list')
 
     def form_valid(self, form):
@@ -48,7 +48,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
-    template_name = 'task_manager_app/task_confirm_delete.html'
+    template_name = 'task_manager/tasks/task_confirm_delete.html'
     success_url = reverse_lazy('task-list')
 
     def delete(self, request, *args, **kwargs):

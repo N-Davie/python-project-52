@@ -1,4 +1,3 @@
-# task_manager_app/filters.py
 import django_filters
 from .models import Task, Status, User, Label
 

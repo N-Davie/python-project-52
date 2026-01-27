@@ -3,15 +3,6 @@ from .models import Status, Task, Label
 from django.contrib.auth.models import User
 
 
-class StatusForm(forms.ModelForm):
-    class Meta:
-        model = Status
-        fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -25,11 +16,3 @@ class TaskForm(forms.ModelForm):
             'labels': forms.SelectMultiple(attrs={'class': 'form-control', 'size': 5}),
         }
 
-
-class LabelForm(forms.ModelForm):
-    class Meta:
-        model = Label
-        fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-        }

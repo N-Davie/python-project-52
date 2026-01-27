@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Status, Task
+from .models import Label
 
-admin.site.register(Status)
-admin.site.register(Task)
+admin.site.register(Label)

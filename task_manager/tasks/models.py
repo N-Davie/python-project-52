@@ -1,21 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 
-# Модель Status
-class Status(models.Model):
-    name = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.name
-
-# Модель Label
-class Label(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-# Модель Task
 class Task(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
