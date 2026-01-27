@@ -1,5 +1,6 @@
 [project]
 name = "hexlet-code"
+packages = ["task_manager"]
 version = "0.1.0"
 description = "Add here"
 readme = "README.md"
