@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from django.contrib.auth.models import User
-from task_manager_app.tests.utils import login
+from tests.utils import login
 
 
 pytestmark = pytest.mark.django_db 

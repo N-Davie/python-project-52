@@ -1,5 +1,8 @@
 import django_filters
-from .models import Task, Status, User, Label
+from task_manager.tasks.models import Task
+from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
+from django.contrib.auth.models import User
 
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(queryset=Status.objects.all())

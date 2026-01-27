@@ -7,13 +7,13 @@ from django.contrib.auth.models import User
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
-    template_name = 'task_manager_app/user_list.html'
+    template_name = 'user/user_list.html'
     context_object_name = 'users'
 
 class UserCreateView(CreateView):
     model = User
     fields = ['username', 'password']
-    template_name = 'task_manager_app/user_form.html'
+    template_name = 'user/user_form.html'
     success_url = reverse_lazy('user-list')
 
     def form_valid(self, form):
@@ -26,7 +26,7 @@ class UserCreateView(CreateView):
 class UserUpdateView(UpdateView):
     model = User
     fields = ['username', 'first_name', 'last_name']
-    template_name = 'task_manager_app/user_form.html'
+    template_name = 'user/user_form.html'
     success_url = reverse_lazy('user-list')
 
     def dispatch(self, request, *args, **kwargs):
@@ -41,7 +41,7 @@ class UserUpdateView(UpdateView):
 
 class UserDeleteView(DeleteView):
     model = User
-    template_name = 'task_manager_app/user_confirm_delete.html'
+    template_name = 'user/user_confirm_delete.html'
     success_url = reverse_lazy('user-list')
 
     def delete(self, request, *args, **kwargs):

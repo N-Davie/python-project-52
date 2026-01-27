@@ -8,13 +8,13 @@ from task_manager.statuses.forms import StatusForm
 
 class StatusListView(LoginRequiredMixin, ListView):
     model = Status
-    template_name = 'task_manager/statuses/status_list.html'
+    template_name = 'status/status_list.html'
     context_object_name = 'statuses'
 
 class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status
     form_class = StatusForm
-    template_name = 'task_manager/statuses/status_form.html'
+    template_name = 'status/status_form.html'
     success_url = reverse_lazy('status-list')
 
     def form_valid(self, form):
@@ -24,7 +24,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
 class StatusUpdateView(LoginRequiredMixin, UpdateView):
     model = Status
     form_class = StatusForm
-    template_name = 'task_manager/statuses/status_form.html'
+    template_name = 'status/status_form.html'
     success_url = reverse_lazy('status-list')
 
     def form_valid(self, form):
@@ -33,7 +33,7 @@ class StatusUpdateView(LoginRequiredMixin, UpdateView):
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = Status
-    template_name = 'task_manager/statuses/status_confirm_delete.html'
+    template_name = 'status/status_confirm_delete.html'
     success_url = reverse_lazy('status-list')
 
     def delete(self, request, *args, **kwargs):

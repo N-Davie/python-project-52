@@ -1,7 +1,10 @@
 import pytest
 from django.urls import reverse
-from task_manager_app.models import Task, Status, Label
-from task_manager_app.tests.utils import create_user, login
+from task_manager.tasks.models import Task
+from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
+from tests.utils import create_user, login
+
 
 pytestmark = pytest.mark.django_db  # Позволяет работать с базой данных в тестах
 
@@ -108,4 +111,4 @@ def test_task_filter_only_mine(client):
     response = client.get(url)
     content = response.content.decode()
     assert 'MyTask' in content
-    assert 'OtherTask' not in content  # тут все верно
+    assert 'OtherTask' not in content

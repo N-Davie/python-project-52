@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import rollbar
 
 def home(request):
-    return render(request, 'task_manager_app/index.html')
+    return render(request, 'index.html')
 
 def rollbar_test(request):
     try:

@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        # Добавляем поле labels
         fields = ['name', 'description', 'status', 'executor', 'labels']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -15,4 +14,3 @@ class TaskForm(forms.ModelForm):
             'executor': forms.Select(attrs={'class': 'form-control'}),
             'labels': forms.SelectMultiple(attrs={'class': 'form-control', 'size': 5}),
         }
-

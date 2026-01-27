@@ -1,11 +1,11 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
+
 urlpatterns = [
-    path('tasks/', views.TaskListView.as_view(), name='task-list'),
-    path('tasks/create/', views.TaskCreateView.as_view(), name='task-create'),
-    path('tasks/<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
-    path('tasks/<int:pk>/update/', views.TaskUpdateView.as_view(), name='task-update'),
-    path('tasks/<int:pk>/delete/', views.TaskDeleteView.as_view(), name='task-delete'),
+    path('', views.TaskListView.as_view(), name='task-list'),
+    path('create/', views.TaskCreateView.as_view(), name='task-create'),
+    path('<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
+    path('<int:pk>/update/', views.TaskUpdateView.as_view(), name='task-update'),
+    path('<int:pk>/delete/', views.TaskDeleteView.as_view(), name='task-delete'),
 ]

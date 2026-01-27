@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
-from django.contrib.auth.models import User
-from task_manager_app.models import Label, Status, Task
-from task_manager_app.tests.utils import create_user, login
+from task_manager.statuses.models import Status
+from tests.utils import create_user, login
+
 
 pytestmark = pytest.mark.django_db
 

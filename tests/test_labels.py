@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
-from task_manager_app.models import Label, Task, Status
-from task_manager_app.tests.utils import create_user, login
+from task_manager.labels.models import Label
+from tests.utils import create_user, login 
 
 
 pytestmark = pytest.mark.django_db 
