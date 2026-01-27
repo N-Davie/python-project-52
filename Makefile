@@ -28,7 +28,6 @@ lint:
 
 test:
 	uv pip install -e .
-	uv run python manage.py migrate --noinput
 	uv run pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
