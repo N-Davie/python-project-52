@@ -1,5 +1,5 @@
 install:
-	uv pip install .
+	uv pip install -e .
 
 collectstatic:
 	python manage.py collectstatic --noinput
@@ -17,6 +17,7 @@ lint:
 	ruff check task_manager users tasks statuses labels
 
 test:
-	pytest
-
+	uv pip install -e .
+	uv run pytest
+	
 .PHONY: install collectstatic migrate build render-start lint test
