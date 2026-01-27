@@ -3,7 +3,7 @@ name = "hexlet-code"
 version = "0.1.0"
 description = "Add here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.0"
 dependencies = [
     "pytest-cov==6.1.1",
     "pyyaml==6.0.2",
@@ -29,9 +29,8 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["task_manager*"]
+[tool.hatch.build.targets.wheel]
+packages = ["task_manager"]
 
 [dependency-groups]
 dev = [

@@ -1,5 +1,5 @@
 install:
-	uv pip install -e .
+	uv sync
 
 collectstatic:
 	python manage.py collectstatic --noinput
@@ -12,6 +12,15 @@ build:
 
 render-start:
 	gunicorn task_manager.wsgi:application
+
+package-install:
+	uv tool install dist/*.whl
+
+reinstall:
+	uv tool install --force dist/*.whl
+
+uninstall:
+	uv tool uninstall hexlet-code
 
 lint:
 	ruff check task_manager users tasks statuses labels
