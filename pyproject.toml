@@ -29,9 +29,6 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.setuptools]
-packages = ["task_manager"]
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["task_manager*"]
