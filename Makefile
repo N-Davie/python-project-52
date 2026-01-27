@@ -28,6 +28,7 @@ lint:
 
 test:
 	uv pip install -e .
+	uv run python manage.py migrate --settings=task_manager.settings --noinput
 	uv run pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
