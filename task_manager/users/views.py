@@ -3,12 +3,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
+
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'user/user_list.html'
     context_object_name = 'users'
+
 
 class UserCreateView(CreateView):
     model = User
@@ -22,6 +27,7 @@ class UserCreateView(CreateView):
         user.save()
         messages.success(self.request, 'Пользователь успешно создан.')
         return super().form_valid(form)
+
 
 class UserUpdateView(UpdateView):
     model = User
@@ -39,6 +45,7 @@ class UserUpdateView(UpdateView):
         messages.success(self.request, 'Пользователь успешно обновлен.')
         return super().form_valid(form)
 
+
 class UserDeleteView(DeleteView):
     model = User
     template_name = 'user/user_confirm_delete.html'
@@ -46,7 +53,7 @@ class UserDeleteView(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.task_set.exists():
+        if self.object.assigned_tasks.exists() or self.object.created_tasks.exists():
             messages.error(request, 'Невозможно удалить пользователя, связанного с задачами.')
             return redirect('user-list')
         messages.success(request, 'Пользователь успешно удален.')
