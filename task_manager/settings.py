@@ -90,13 +90,16 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task_manager',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',  # <- не localhost
-        'PORT': 5432,
+        'NAME': 'postgres',          # название базы данных на вашем сервере
+        'USER': 'postgres',          # ваш пользователь Postgres
+        'PASSWORD': 'postgres',      # пароль пользователя
+        'HOST': 'localhost',         # если база на той же машине
+        'PORT': '5432',              # порт Postgres
     }
 }
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # рабочий вариант для студента
+
 
 
 # Password validation
