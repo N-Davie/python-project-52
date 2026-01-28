@@ -5,7 +5,8 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 migrate:
-	python manage.py makemigrations
+        @echo "Running migrations..."	
+        python manage.py makemigrations
         python manage.py migrate
 	
 
@@ -29,8 +30,7 @@ lint:
 
 test:
 	uv pip install -e .
-        python manage.py makemigrations
-        python manage.py migrate
+        uv run make migrate
 	uv run pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
