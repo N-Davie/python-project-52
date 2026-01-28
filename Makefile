@@ -5,8 +5,9 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 migrate:
-	python3 manage.py migrate
-	python3 manage.py makemigrations
+	python manage.py makemigrations
+        python manage.py migrate
+	
 
 build:
 	./build.sh
@@ -28,7 +29,8 @@ lint:
 
 test:
 	uv pip install -e .
-	uv run python manage.py migrate --settings=task_manager.settings --noinput
+        python manage.py makemigrations
+        python manage.py migrate
 	uv run pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
