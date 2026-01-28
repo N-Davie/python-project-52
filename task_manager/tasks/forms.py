@@ -1,8 +1,6 @@
 from django import forms
 from .models import Status, Task, Label
-from django.contrib.auth.models import User
-
-
+from task_manager.users.models import User
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -11,6 +9,6 @@ class TaskForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'status': forms.Select(attrs={'class': 'form-control'}),
-            'executor': forms.Select(attrs={'class': 'form-control'}),
+            'executor': forms.Select(attrs={'class': 'form-control'}),  # теперь выбирается кастомный User
             'labels': forms.SelectMultiple(attrs={'class': 'form-control', 'size': 5}),
         }
