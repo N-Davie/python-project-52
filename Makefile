@@ -1,33 +1,32 @@
 install:
 	uv sync
 
-collectstatic:
-	python manage.py collectstatic --noinput
+dev:
+	uv run python manage.py runserver
+
+PORT ?= 8000
+start:
+	uv run python manage.py migrate
+	uv run gunicorn --bind 0.0.0.0:$(PORT) task_manager.wsgi
+
+shell:
+	uv run python manage.py shell
+
+makemig:
+	uv run python manage.py makemigrations
 
 migrate:
-        python manage.py migrate
-	
+	uv run python manage.py migrate
 
-build:
-	./build.sh
-
-render-start:
-	gunicorn task_manager.wsgi:application
-
-package-install:
-	uv tool install dist/*.whl
-
-reinstall:
-	uv tool install --force dist/*.whl
-
-uninstall:
-	uv tool uninstall hexlet-code
+collectstatic:
+	uv run python manage.py collectstatic --noinput
 
 lint:
 	ruff check task_manager users tasks statuses labels
+
 test:
 	uv pip install -e .
-        uv run make migrate
+	uv run python manage.py migrate
 	uv run pytest
 
-.PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
+.PHONY: install dev start shell makemig migrate collectstatic lint test
