@@ -1,10 +1,8 @@
-# task_manager/users/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 class User(AbstractUser):
-    # Поля, которые уже есть в AbstractUser, явно прописаны для ясности
     id = models.BigAutoField(primary_key=True)
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
