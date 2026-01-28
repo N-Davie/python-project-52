@@ -26,7 +26,6 @@ lint:
 
 test:
 	uv pip install -e .
-	uv run python manage.py migrate
 	uv run pytest
 
 .PHONY: install dev start shell makemig migrate collectstatic lint test
