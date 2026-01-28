@@ -25,5 +25,9 @@ uninstall:
 
 lint:
 	ruff check task_manager users tasks statuses labels
+test:
+	uv pip install -e .
+        uv run make migrate
+	uv run pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
