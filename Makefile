@@ -5,8 +5,6 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 migrate:
-        @echo "Running migrations..."	
-        python manage.py makemigrations
         python manage.py migrate
 	
 
@@ -29,8 +27,6 @@ lint:
 	ruff check task_manager users tasks statuses labels
 
 test:
-	uv pip install -e .
-        uv run make migrate
-	uv run pytest
+        pytest
 
 .PHONY: install collectstatic migrate build render-start lint test package-install reinstall uninstall
