@@ -29,9 +29,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xt+774vhb#&=x9+=+a=k+s^5ebxkjn_9*yd-k9hta9e1fgp$f2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['webserver', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    "localhost",
+    "webserver",
+    "task-manager-52.pupsidian.ru",
+    "127.0.0.1",
+    "0.0.0.0",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost",
+    "http://webserver",
+    "https://task-manager-52.pupsidian.ru",
+    "http://127.0.0.1",
+    "http://0.0.0.0",
+]
 
 
 # Application definition
@@ -43,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'task_manager',
     'task_manager.labels',
     'task_manager.users',
     'task_manager.tasks',
@@ -50,8 +65,6 @@ INSTALLED_APPS = [
     'django_filters',
     'widget_tweaks',
 ]
-
-AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
