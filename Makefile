@@ -11,13 +11,13 @@ render-start:
 		gunicorn task_manager.wsgi
 
 test:
-	        uv run manage.py test
+	    uv run manage.py test
 
 test-coverage:
-	uv run pytest --cov=gendiff --cov-report=xml:coverage.xml
+	    uv run pytest --cov=gendiff --cov-report=xml:coverage.xml
 
 lint:
-	        uv run ruff
+	    uv run ruff
 
 migrate:
 		uv run python manage.py makemigrations
