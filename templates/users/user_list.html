@@ -1,24 +1,41 @@
-{% extends "task_manager_app/base.html" %}
+{% extends "index.html" %}
+
+
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} | {% trans 'Task Manager' %}{% endblock %}
 
 {% block content %}
-<h1>Пользователи</h1>
-<table>
-  <tr>
-    <th>Имя пользователя</th>
-    <th>Email</th>
-    <th>Действия</th>
-  </tr>
-  {% for user in users %}
-  <tr>
-    <td>{{ user.username }}</td>
-    <td>{{ user.email }}</td>
-    <td>
-      <a href="{% url 'user-update' user.pk %}">Редактировать</a>
-      <a href="{% url 'user-delete' user.pk %}">Удалить</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-<a href="{% url 'user-create' %}">Добавить нового пользователя</a>
-{% endblock %}
+    <h1 class="my-4">{{ title }}</h1>
 
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>{% trans 'Username' %}</th>
+                <th>{% trans 'Full name' %}</th>
+                <th>{% trans 'Creation date' %}</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if users %}
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                        <td>
+                          <a href="{% url 'update_user' user.id %}">{% trans 'Update' %}</a>
+                          <br>
+                          <a href="{% url 'delete_user' user.id %}">{% trans 'Delete' %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

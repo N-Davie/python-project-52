@@ -1,64 +1,57 @@
-{% extends "task_manager_app/base.html" %}
+{% extends "index.html" %}
 
-{% block title %}Задачи{% endblock %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}
+    {{ title }} | {% trans 'Task Manager' %}
+{% endblock %}
 
 {% block content %}
-<h1>Задачи</h1>
+    <h1 class="my-4">{{ title }}</h1>
 
-<a href="{% url 'task-create' %}">Создать задачу</a>
+    <a class="btn btn-primary mb-3" href="{% url 'task_create' %}">{% trans 'Create task' %}</a>
 
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
-      {{ message }}
+    <div class="card mb-3">
+        <div class="card-body bg-light">
+            <form class="form-inline center" method="get">
+              {% bootstrap_form filter.form field_class="ml-2 mr-3" %}
+              {% bootstrap_button button_text button_type="submit" button_class="btn btn-primary" %}
+            </form>
+        </div>
     </div>
-  {% endfor %}
-{% endif %}
 
-<!-- Форма фильтрации -->
-<form method="get" style="margin-top: 20px; margin-bottom: 20px;">
-  {{ filter.form.as_p }}
-  <button type="submit">Применить фильтр</button>
-  <a href="{% url 'task-list' %}" class="btn btn-secondary">Сбросить фильтр</a>
-</form>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>{% trans 'Name' %}</th>
+                <th>{% trans 'Status' %}</th>
+                <th>{% trans 'Author' %}</th>
+                <th>{% trans 'Executor' %}</th>
+                <th>{% trans 'Creation date' %}</th>
+                <th></th>
+            </tr>
+        </thead>
 
-<table border="1" cellpadding="5" cellspacing="0">
-  <tr>
-    <th>Название</th>
-    <th>Статус</th>
-    <th>Автор</th>
-    <th>Исполнитель</th>
-    <th>Метки</th>
-    <th>Действия</th>
-  </tr>
-  {% for task in tasks %}
-    <tr>
-      <td><a href="{% url 'task-detail' task.id %}">{{ task.name }}</a></td>
-      <td>{{ task.status.name }}</td>
-      <td>{{ task.author.username }}</td>
-      <td>
-        {% if task.executor %}
-          {{ task.executor.username }}
-        {% else %}
-          -
-        {% endif %}
-      </td>
-      <td>
-        {% if task.labels.exists %}
-          {% for label in task.labels.all %}
-            {{ label.name }}{% if not forloop.last %}, {% endif %}
-          {% endfor %}
-        {% else %}
-          -
-        {% endif %}
-      </td>
-      <td>
-        <a href="{% url 'task-update' task.id %}">Редактировать</a> |
-        <a href="{% url 'task-delete' task.id %}">Удалить</a>
-      </td>
-    </tr>
-  {% empty %}
-    <tr><td colspan="6">Нет задач</td></tr>
-  {% endfor %}
-</table>
-{% endblock %}
+        <tbody>
+            {% if tasks %}
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.id }}</td>
+                        <td><a href="{% url 'task_show' task.id %}">{{ task.name }}</a></td>
+                        <td>{{ task.status }}</td>
+                        <td>{{ task.author }}</td>
+                        <td>{{ task.executor }}</td>
+                        <td>{{ task.date_created|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>
+                            <br>
+                            <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

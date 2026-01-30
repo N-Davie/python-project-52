@@ -1,21 +1,18 @@
-{% extends "task_manager_app/base.html" %}
+{% extends "index.html" %}
 
-{% block title %}Удалить метку{% endblock %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}
+    {{ title }} | {% trans 'Task Manager' %}
+{% endblock %}
 
 {% block content %}
-<h1>Удалить метку</h1>
+    <h1 class="my-4">{{ title }}</h1>
 
-<p>Вы действительно хотите удалить метку "{{ object.name }}"?</p>
-
-<form method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-danger">Удалить</button>
-  <a href="{% url 'label-list' %}" class="btn btn-secondary">Отмена</a>
-</form>
-
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-  {% endfor %}
-{% endif %}
+    <form method="post">
+        <p>{% trans 'Are you sure you want to delete' %} {{ label.name }}?</p>
+        {% csrf_token %}
+        {% bootstrap_button button_text button_type="submit" button_class="btn btn-danger" %}
+    </form>
 {% endblock %}

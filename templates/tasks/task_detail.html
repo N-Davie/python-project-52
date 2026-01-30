@@ -1,24 +1,66 @@
-{% extends "task_manager_app/base.html" %}
+{% extends "index.html" %}
 
-{% block title %}Задача: {{ task.name }}{% endblock %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}
+    {{ task.name }} | {% trans 'Task Manager' %}
+{% endblock %}
 
 {% block content %}
-<h1>{{ task.name }}</h1>
+    <h1 class="my-4">{{ title }}</h1>
 
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
-      {{ message }}
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h2>{{ task.name }}</h2>
+        </div>
+
+        <div class="card-body bg-light">
+            <p>{{ task.description }}</p>
+
+            <hr>
+
+            <div class="container">
+
+                <div class="row p-1">
+                    <div class="col">{% trans 'Author' %}</div>
+                    <div class="col">{{ task.author }}</div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col">{% trans 'Executor' %}</div>
+                    <div class="col">{{ task.executor }}</div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col">{% trans 'Status' %}</div>
+                    <div class="col">{{ task.status }}</div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col">{% trans 'Creation date' %}</div>
+                    <div class="col">{{ task.date_created|date:"d.m.Y H:i" }}</div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col">
+                        <h6>{% trans 'Labels' %}:</h6>
+                        <ul>
+                            {% for label in task.labels.all %}
+                                <li>{{  label.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row p-1">
+                    <div class="col">
+                        <a href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>
+                        <br>
+                        <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  {% endfor %}
-{% endif %}
-
-<p><strong>Описание:</strong> {{ task.description }}</p>
-<p><strong>Статус:</strong> {{ task.status.name }}</p>
-<p><strong>Автор:</strong> {{ task.author.username }}</p>
-<p><strong>Исполнитель:</strong> {{ task.executor.username if task.executor else "—" }}</p>
-
-<a href="{% url 'task-update' task.id %}">Редактировать</a> |
-<a href="{% url 'task-delete' task.id %}">Удалить</a> |
-<a href="{% url 'task-list' %}">Вернуться к списку задач</a>
-{% endblock %}
+{% endblock content %}

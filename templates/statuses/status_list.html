@@ -1,26 +1,39 @@
-{% extends "task_manager_app/base.html" %}
-{% block title %}Статусы{% endblock %}
-{% block content %}
-<h2>Список статусов</h2>
-<a href="{% url 'status-create' %}" class="btn btn-primary mb-3">Добавить статус</a>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Название</th>
-      <th>Действия</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for status in object_list %}
-    <tr>
-      <td>{{ status.name }}</td>
-      <td>
-        <a href="{% url 'status-update' status.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
-        <a href="{% url 'status-delete' status.pk %}" class="btn btn-sm btn-danger">Удалить</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock %}
+{% extends "index.html" %}
 
+
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block content %}
+    <h1 class="my-4">{{ title }}</h1>
+
+    <a class="btn btn-primary mb-3" href="{% url 'status_create' %}">{% trans 'Create status' %}</a>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>{% trans 'Name' %}</th>
+                <th>{% trans 'Creation date' %}</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if statuses %}
+                {% for status in statuses %}
+                    <tr>
+                        <td>{{ status.id }}</td>
+                        <td>{{ status.name }}</td>
+                        <td>{{ status.date_created|date:"d.m.Y H:i" }}</td>
+                        <td>
+                          <a href="{% url 'status_update' status.id %}">{% trans 'Update' %}</a>
+                          <br>
+                          <a href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}
