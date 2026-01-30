@@ -1,0 +1,53 @@
+{% extends "task_manager_app/base.html" %}
+
+{% block title %}Форма задачи{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} задачу</h1>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    {{ form.name.label_tag }}<br>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </p>
+
+  <p>
+    {{ form.description.label_tag }}<br>
+    {{ form.description }}
+    {{ form.description.errors }}
+  </p>
+
+  <p>
+    {{ form.status.label_tag }}<br>
+    {{ form.status }}
+    {{ form.status.errors }}
+  </p>
+
+  <p>
+    {{ form.executor.label_tag }}<br>
+    {{ form.executor }}
+    {{ form.executor.errors }}
+  </p>
+
+  <p>
+    {{ form.labels.label_tag }}<br>
+    {{ form.labels }}
+    {{ form.labels.errors }}
+  </p>
+
+  <button type="submit">{% if form.instance.pk %}Обновить{% else %}Создать{% endif %}</button>
+</form>
+
+<a href="{% url 'task-list' %}">Вернуться к списку задач</a>
+{% endblock %}
