@@ -1,48 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
-# Модель Status
-class Status(models.Model):
-    name = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.name
-
-# Модель Label
 class Label(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(
+        max_length=150,
+        unique=True,
+        blank=False,
+        verbose_name=_('Name'),
+    )
+    date_created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Creation date')
+    )
 
     def __str__(self):
         return self.name
 
-# Модель Task
-class Task(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    
-    status = models.ForeignKey(
-        Status,
-        on_delete=models.PROTECT,
-        related_name='tasks'
-    )
-
-    author = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name='created_tasks'
-    )
-
-    executor = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='assigned_tasks'
-    )
-
-    labels = models.ManyToManyField(Label, blank=True, related_name='tasks')
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
+    class Meta:
+        verbose_name = _('Label')
+        verbose_name_plural = _('Labels')
