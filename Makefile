@@ -1,22 +1,35 @@
 install:
-	uv pip install -r requirements.txt
+		uv sync
 
-collectstatic:
-	python manage.py collectstatic --noinput
-
-migrate:
-	python manage.py migrate
+runserver:
+		python manage.py runserver
 
 build:
-	./build.sh
+		./build.sh
 
 render-start:
-	gunicorn task_manager.wsgi:application
-
-lint:
-	ruff check task_manager task_manager_app
+		gunicorn task_manager.wsgi
 
 test:
-	PYTHONPATH=/project pytest task_manager_app/tests
+	        uv run manage.py test
 
-.PHONY: install collectstatic migrate build render-start lint test
+lint:
+	        uv run ruff
+
+migrate:
+		uv run python manage.py makemigrations
+		uv run python manage.py migrate
+
+check:
+		uv pip check
+
+PORT ?= 8000
+start:
+		uv run gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.wsgi
+
+makemessages:
+	 	django-admin makemessages
+
+render-start:
+		gunicorn task_manager.wsgi
+		
