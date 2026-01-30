@@ -13,6 +13,9 @@ render-start:
 test:
 	        uv run manage.py test
 
+test-coverage:
+	uv run pytest --cov=gendiff --cov-report=xml:coverage.xml
+
 lint:
 	        uv run ruff
 
