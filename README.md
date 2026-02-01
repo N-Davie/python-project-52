@@ -5,7 +5,6 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-52)
 
-
 https://task-mr.onrender.com
 
 Task Manager
