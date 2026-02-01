@@ -27,10 +27,10 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         with:
           projectBaseDir: .
-          projectKey: N-Davie_python-project-52
-          organization: N-Davie
-          extraProperties: |
-            sonar.python.coverage.reportPaths=coverage.xml
+          args: >
+            -Dsonar.projectKey=N-Davie_python-project-52
+            -Dsonar.organization=N-Davie
+            -Dsonar.python.coverage.reportPaths=coverage.xml
         env:
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
