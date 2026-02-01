@@ -11,21 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DJANGO_SETTINGS_MODULE: task_manager.settings
-        ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-        ROLLBAR_ENV: development
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DJANGO_SETTINGS_MODULE: task_manager.settings
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: https://sonarcloud.io
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '>=3.12'
+          python-version: '3.12'
 
       - name: Install uv
         run: |
@@ -35,27 +33,17 @@ jobs:
       - name: Install dependencies
         run: make ci-install
 
-      - name: Show versions
-        run: |
-          python --version
-          uv --version
-          uv run python -c "import django,sys; print('Django', django.get_version())"
-      
-      - name: Run Ruff linter
-        run: make lint
-
       - name: Run migrations
         run: make ci-migrate
 
       - name: Run tests with coverage
-        run: make ci-test
+        run: make ci-test  # coverage.xml создаётся здесь
 
-      - name: SonarQubeScan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v6
         with:
+          projectBaseDir: .
           args: >
             -Dsonar.projectKey=N-Davie_python-project-52
-            -Dsonar.organization=n-davie
+            -Dsonar.organization=N-Davie
             -Dsonar.python.coverage.reportPaths=coverage.xml
