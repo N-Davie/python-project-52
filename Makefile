@@ -16,6 +16,7 @@ test:
 coverage:
 		uv run coverage run --omit='*/migrations/*,*/settings.py,*/venv/*,*/.venv/*' -m pytest --ds=task_manager.settings
 		uv run coverage report --show-missing --skip-covered
+		uv run coverage xml -o coverage.xml
 
 
 ci-install:
