@@ -1,9 +1,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/N-Davie/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/N-Davie/python-project-52/actions)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-522&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-522)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-52&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-52)
 
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-522&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-522)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-52)
 
 https://task-mr.onrender.com
 
