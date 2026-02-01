@@ -45,5 +45,5 @@ jobs:
           projectBaseDir: .
           args: >
             -Dsonar.projectKey=N-Davie_python-project-52
-            -Dsonar.organization=N-Davie
+            -Dsonar.organization=n-davie
             -Dsonar.python.coverage.reportPaths=coverage.xml
