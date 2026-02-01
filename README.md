@@ -3,6 +3,7 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-522&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-522)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N-Davie_python-project-522&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N-Davie_python-project-522)
 
 https://task-mr.onrender.com
 
