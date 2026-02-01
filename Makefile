@@ -13,8 +13,9 @@ render-start:
 test:
 	    uv run manage.py test
 
-test-coverage:
-	    uv run pytest --cov=task_manager --cov-report=xml:coverage.xml
+coverage:
+	    uv run coverage run --omit='*/migrations/*,*/settings.py,*/venv/*,*/.venv/*' -m pytest --ds=task_manager.settings
+	    uv run coverage report --show-missing --skip-covered
 
 lint:
 	    uv run ruff
