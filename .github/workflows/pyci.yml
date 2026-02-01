@@ -25,7 +25,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '>=3.12'
 
       - name: Install uv
         run: |
@@ -51,10 +51,9 @@ jobs:
         run: make ci-test
 
       - name: SonarQubeScan
-        uses: sonarsource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
         with:
           args: >
             -Dsonar.projectKey=N-Davie_python-project-52
