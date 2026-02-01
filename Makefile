@@ -34,7 +34,7 @@ ci-test:
 		uv run coverage report --show-missing --skip-covered
 
 lint:
-	    uv run ruff
+	    uv run ruff check .
 
 migrate:
 		uv run python manage.py makemigrations
