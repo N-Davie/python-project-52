@@ -1,36 +1,37 @@
-name: SonarQube Analysis
+name: Python CI
 
 on:
-  push:
-    branches:
-      - main
+  - push
+  - pull_request
 
 jobs:
-  sonarqube:
-    name: SonarQube
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '>=3.12'
-
       - name: Install dependencies
         run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install -e .
+          pip install uv
+          make install
+      - name: Run linter and pytest
+        run: |
+          make check
+      - name: Run test coverage
+        run: |
+          make test-coverage
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
+      - name: SonarQubeScan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: .
           args: >
             -Dsonar.projectKey=N-Davie_python-project-52
-            -Dsonar.organization=N-Davie
+            -Dsonar.organization=n-davie
             -Dsonar.python.coverage.reportPaths=coverage.xml
-        env:
-          SONAR_HOST_URL: https://sonarcloud.io
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            -Dsonar.coverage.exclusions=tests/**
+            -Dsonar.exclusions=tests/**
